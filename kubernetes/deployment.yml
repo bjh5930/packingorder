@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: packingorder
+  labels:
+    app: packingorder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: packingorder
+  template:
+    metadata:
+      labels:
+        app: packingorder
+    spec:
+      containers:
+        - name: packingorder
+          image: username/packingorder:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
