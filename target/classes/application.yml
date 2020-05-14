@@ -17,7 +17,7 @@ spring:
         streams:
           binder:
             configuration:
-              default
+              default:
                 key:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
                 value:
